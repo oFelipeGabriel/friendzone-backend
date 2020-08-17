@@ -104,16 +104,19 @@ router.post('/addConfirmacao', async (req,res)=>{
     grupo.aguardandoConfirm.pull(email)
     const options =  notification_options
     await grupo.save()
-    let message = `Seu amigo ${usuario.nome} acabou de aceitar o convite para o amigo secreto do grupo ${grupo.nome}`;
-    const message_notification = {
-        notification: {
-           title: "Convite aceito",
-           body: message
-               }
-        };
-    admin.messaging().sendToDevice(grupo.criadoPor.idFirebase, message_notification, options).then( response => {
-        console.log("push enviado ",response)
-    })
+    if(grupo.criadoPor.idFirebase){
+        let message = `Seu amigo ${usuario.nome} acabou de aceitar o convite para o amigo secreto do grupo ${grupo.nome}`;
+        const message_notification = {
+            notification: {
+            title: "Convite aceito",
+            body: message
+                }
+            };
+        admin.messaging().sendToDevice(grupo.criadoPor.idFirebase, message_notification, options).then( response => {
+            console.log("push enviado ",response)
+        })
+    }
+    
     return res.json(grupo)
 })
 router.delete('/apaga', async (req,res) => {
