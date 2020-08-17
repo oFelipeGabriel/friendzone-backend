@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser')
 const jsonParser = bodyParser.json();
+const PORT = process.env.PORT || 5000
 
 
 
@@ -12,4 +13,4 @@ app.use(jsonParser); // use it globally
 
 require('./controllers/usuarioController')(app);
 require('./controllers/grupoController')(app);
-app.listen(3333);
+app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
