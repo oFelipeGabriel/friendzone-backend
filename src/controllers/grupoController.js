@@ -122,7 +122,7 @@ router.delete('/apaga', async (req,res) => {
     return res.send({message: 'Apagado com sucesso'})
 })
 router.get('/sortear', async (req,res) =>{
-    let grupoId = await req.body.grupoId;
+    let grupoId = await req.query.grupoId;
     let grupo = await Grupo.findById(grupoId).populate('usuarios').populate('criadoPor');
     let lista = grupo.usuarios;
     // let keys = Object.keys(combinados);
