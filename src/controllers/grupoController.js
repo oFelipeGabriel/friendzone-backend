@@ -58,6 +58,7 @@ router.get('/buscaAceites', async (req,res) =>{
         let grupos = await Grupo.find({$or:[ {usuarios: id}, {'sorteados.entrega': id} ]})
         .populate('usuarios')
         .populate('sorteados.recebe')
+        .populate('criadoPor')
         .populate({
             path: 'sorteados.entrega',
             match: {_id: id } ,
